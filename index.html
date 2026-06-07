@@ -207,17 +207,19 @@ Lablab, Pipoy.
 </section>
 
 <!-- QUIZ -->
+
 <section id="quiz" class="hidden">
 
-<h2>Level 1: First Memory 💙</h2>
+<h2>Level 1: Love Quiz 💙</h2>
 
 <div class="card">
-<p>What nickname do we always call each other?</p>
 
-<button class="quiz-option" onclick="wrong()">Honey</button>
-<button class="quiz-option" onclick="correct()">Love</button>
-<button class="quiz-option" onclick="wrong()">Sweetie</button>
-<button class="quiz-option" onclick="wrong()">Babe</button>
+<h3 id="question"></h3>
+
+<div id="options"></div>
+
+<p id="quizProgress" style="margin-top:20px;"></p>
+
 </div>
 
 </section>
@@ -353,7 +355,7 @@ I love you, Love.
 
 function updateCounter(){
 
-const startDate = new Date("2024-02-07");
+const startDate = new Date("2024-02-10");
 
 const now = new Date();
 
@@ -405,11 +407,136 @@ document.getElementById("quiz").classList.remove("hidden");
 
 document.getElementById("bgMusic").play();
 
+loadQuestion();
+
 }
 
-function correct(){
+const quizQuestions = [
 
-alert("Correct, Love 💙");
+{
+question:"When is our anniversary?",
+options:[
+"February 10, 2024",
+"February 10, 2025",
+"November 10, 2024",
+"November 10, 2025"
+],
+answer:"February 10, 2024",
+message:"💙 The day my favorite love story officially began."
+},
+
+{
+question:"What exact time did we officially become boyfriend and girlfriend?",
+options:[
+"9:28 PM",
+"9:30 PM",
+"8:28 PM",
+"8:30 PM"
+],
+answer:"9:28 PM",
+message:"⏰ 9:28 PM... a time I'll always remember."
+},
+
+{
+question:"Where did we get our first kiss?",
+options:[
+"School",
+"Beach",
+"Calvary",
+"SM Mall"
+],
+answer:"School",
+message:"😘 A memory that still makes me smile every time I think about it. MALALANDI!!"
+},
+
+{
+question:"How did we start talking?",
+options:[
+"I sold you banana balls",
+"Late night talk sa DSTF",
+"You messaged me first",
+"Crush na crush mo ako :)"
+],
+answer:"I sold you banana balls",
+message:"🍌 Who knew selling banana balls would lead me to the love of my life? And will lick my balls"
+},
+
+{
+question:"What was the first flower you gave to me?",
+options:[
+"Your flower :)))",
+"Crochet Rose",
+"Sunflower",
+"Santan"
+],
+answer:"Santan",
+message:"🌸 A simple flower, but it carried a very special feeling. Palagay nga muna ako nitooo"
+}
+
+];
+
+let currentQuestion = 0;
+
+function startJourney(){
+
+document.getElementById("welcome").classList.add("hidden");
+
+document.getElementById("quiz").classList.remove("hidden");
+
+document.getElementById("bgMusic").play();
+
+loadQuestion();
+
+}
+
+function loadQuestion(){
+
+document.getElementById("question").innerText =
+quizQuestions[currentQuestion].question;
+
+document.getElementById("quizProgress").innerText =
+`Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+const optionsDiv = document.getElementById("options");
+
+optionsDiv.innerHTML = "";
+
+quizQuestions[currentQuestion].options.forEach(option => {
+
+const btn = document.createElement("button");
+
+btn.className = "quiz-option";
+
+btn.innerText = option;
+
+btn.onclick = () => checkAnswer(option);
+
+optionsDiv.appendChild(btn);
+
+});
+
+}
+
+function checkAnswer(selected){
+
+if(selected === quizQuestions[currentQuestion].answer){
+
+alert(
+"Correct! 💙\n\n" +
+quizQuestions[currentQuestion].message
+);
+
+currentQuestion++;
+
+if(currentQuestion < quizQuestions.length){
+
+loadQuestion();
+
+}else{
+
+alert(
+"🎉 Perfect Score! 🎉\n\nYou remembered every special moment of our journey, Love. 💙"
+);
 
 document.getElementById("quiz").classList.add("hidden");
 
@@ -417,11 +544,14 @@ document.getElementById("gallery").classList.remove("hidden");
 
 }
 
-function wrong(){
+}else{
 
-alert("Try again Love 💙");
+alert("❌ Not quite, Love. Try again 💙");
 
 }
+
+}
+
 
 function toggleMemory(card){
 
