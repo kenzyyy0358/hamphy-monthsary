@@ -298,7 +298,7 @@ width:100%;
 <!-- TIMELINE PUZZLE -->
 <section id="timelineSection" class="hidden">
 
-<h2>Level 4: Our Love Story 🧩</h2>
+<h2>Level 3: Our Love Story 🧩</h2>
 
 <p style="margin-bottom:20px;">
 Can you put our story in the correct order, Love? 💙
@@ -315,7 +315,7 @@ Check My Answer 💙
 <!-- CATCH MY HEART -->
 <section id="catchHeartSection" class="hidden">
 
-<h2>Level 5: Catch My Heart 💙</h2>
+<h2>Level 4: Catch My Heart 💙</h2>
 
 <p>
 Catch 15 hearts to unlock the next level!
@@ -341,7 +341,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.1);
 <!-- GALLERY -->
 <section id="gallery" class="hidden">
 
-<h2>Level 2: Memory Gallery 📸</h2>
+<h2>Level 5: Memory Gallery 📸</h2>
 
 <div class="gallery">
 
@@ -374,7 +374,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.1);
 <!-- REASONS -->
 <section id="reasonsSection" class="hidden">
 
-<h2>Level 3: 28 Reasons Why I Love You 💌</h2>
+<h2>Level 6: 28 Reasons Why I Love You 💌</h2>
 
 <div class="reasons" id="reasonsContainer"></div>
 
@@ -389,7 +389,7 @@ box-shadow:0 5px 15px rgba(0,0,0,.1);
 
 <div class="card">
 
-<p>What is the name we always call each other?</p>
+<p>What are the names of our babies?</p>
 
 <input id="passwordInput" placeholder="Type answer...">
 
@@ -1087,7 +1087,10 @@ function checkPassword(){
 
 const value=document.getElementById("passwordInput").value.toLowerCase();
 
-if(value==="love"){
+if (
+    value === "mellow and lemon" ||
+    value === "lemon and mellow"
+){
 
 document.getElementById("passwordSection").classList.add("hidden");
 
