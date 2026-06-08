@@ -7,6 +7,8 @@
 <title>Happy 28th Monthsary, Love 💙</title>
 
 <style>
+
+}
 *{
     margin:0;
     padding:0;
@@ -187,23 +189,51 @@ footer{
     <source src="music/those-eyes.mp3" type="audio/mp3">
 </audio>
 
+<!-- LOVE QUESTION -->
+<section id="loveQuestion">
+
+<h1>💙 One Important Question 💙</h1>
+
+<div class="card">
+
+<h2>Do you love me?</h2>
+
+<button onclick="startJourney()">Yes 💖</button>
+
+<button id="noBtn"
+onmouseover="moveNoButton()"
+onclick="moveNoButton()"
+style="position:relative;">
+No 😝
+</button>
+
+<p style="margin-top:20px;font-style:italic;">
+Try choosing No 😉
+</p>
+
+</div>
+
+</section>
+
 <!-- WELCOME -->
-<section id="welcome">
+<section id="welcome" class="hidden">
 
 <h1>Happy 28th Monthsary 💙</h1>
 
 <div class="card">
+
+<div id="counter"></div>
+
 <h2>To My Love, Amphy</h2>
 <p>
 This little adventure was made with love by your
 Lablab, Pipoy.
 </p>
 
-<div id="counter"></div>
 
-<button onclick="startJourney()">Begin Our Journey →</button>
+
+<button onclick="beginQuiz()">Begin Our Journey →</button>
 </div>
-
 </section>
 
 <!-- QUIZ -->
@@ -220,6 +250,91 @@ Lablab, Pipoy.
 
 <p id="quizProgress" style="margin-top:20px;"></p>
 
+</div>
+
+</section>
+
+<!-- FIND HEART GAME -->
+<section id="findHeart" class="hidden">
+
+<h2>Level 2: Find Pipoy's Heart 💙</h2>
+
+<p style="margin-bottom:20px;">
+One of these boxes contains my heart. Find it, Love. 💙
+</p>
+
+<div id="heartGrid" style="
+display:grid;
+grid-template-columns:repeat(3,100px);
+gap:15px;
+justify-content:center;
+">
+
+</div>
+
+</section>
+
+<!-- LOVE NOTES -->
+<section id="loveNotes" class="hidden">
+
+<h2>Level 3: Hidden Love Notes 💌</h2>
+
+<p style="margin-bottom:20px;">
+Click every heart to discover a hidden message from Pipoy 💙
+</p>
+
+<div id="notesContainer" style="
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:15px;
+max-width:700px;
+width:100%;
+">
+</div>
+
+<p id="notesProgress" style="margin-top:20px;"></p>
+
+</section>
+
+<!-- TIMELINE PUZZLE -->
+<section id="timelineSection" class="hidden">
+
+<h2>Level 4: Our Love Story 🧩</h2>
+
+<p style="margin-bottom:20px;">
+Can you put our story in the correct order, Love? 💙
+</p>
+
+<div id="timelineContainer"></div>
+
+<button id="checkTimelineBtn" onclick="checkTimeline()" style="display:none;">
+Check My Answer 💙
+</button>
+
+</section>
+
+<!-- CATCH MY HEART -->
+<section id="catchHeartSection" class="hidden">
+
+<h2>Level 5: Catch My Heart 💙</h2>
+
+<p>
+Catch 15 hearts to unlock the next level!
+</p>
+
+<h3 id="heartScore">0 / 15 Hearts</h3>
+
+<div id="heartGameArea" style="
+position:relative;
+width:100%;
+max-width:800px;
+height:500px;
+border-radius:20px;
+background:white;
+overflow:hidden;
+margin-top:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+">
 </div>
 
 </section>
@@ -401,13 +516,11 @@ document.body.appendChild(heart);
 
 function startJourney(){
 
-document.getElementById("welcome").classList.add("hidden");
+document.getElementById("loveQuestion").classList.add("hidden");
 
-document.getElementById("quiz").classList.remove("hidden");
+document.getElementById("welcome").classList.remove("hidden");
 
 document.getElementById("bgMusic").play();
-
-loadQuestion();
 
 }
 
@@ -477,13 +590,12 @@ message:"🌸 A simple flower, but it carried a very special feeling. Palagay ng
 
 let currentQuestion = 0;
 
-function startJourney(){
+function beginQuiz(){
 
 document.getElementById("welcome").classList.add("hidden");
 
 document.getElementById("quiz").classList.remove("hidden");
 
-document.getElementById("bgMusic").play();
 
 loadQuestion();
 
@@ -540,7 +652,10 @@ alert(
 
 document.getElementById("quiz").classList.add("hidden");
 
-document.getElementById("gallery").classList.remove("hidden");
+document.getElementById("findHeart").classList.remove("hidden");
+document.getElementById("timelineSection").classList.remove("hidden");
+startTimeline();
+
 
 }
 
@@ -567,6 +682,345 @@ function nextToReasons(){
 document.getElementById("gallery").classList.add("hidden");
 
 document.getElementById("reasonsSection").classList.remove("hidden");
+
+}
+
+// FIND PIPOY'S HEART
+
+const heartGrid = document.getElementById("heartGrid");
+
+const secretHeart = Math.floor(Math.random() * 9);
+
+for(let i = 0; i < 9; i++){
+
+const box = document.createElement("button");
+
+box.innerHTML = "❔";
+
+box.style.width = "100px";
+box.style.height = "100px";
+box.style.fontSize = "40px";
+
+box.onclick = function(){
+
+if(i === secretHeart){
+
+box.innerHTML = "💙";
+
+setTimeout(() => {
+
+alert("You found my heart because you've always had it. 💙");
+
+document.getElementById("findHeart").classList.add("hidden");
+document.getElementById("timelineSection").classList.remove("hidden");
+
+startTimeline();
+
+},500);
+
+}else{
+
+// WRONG BOX EFFECT (RESTORED)
+box.innerHTML = "😝";
+
+setTimeout(() => {
+box.innerHTML = "❔";
+},800);
+
+}
+
+};
+
+heartGrid.appendChild(box);
+
+}
+
+// LOVE NOTES GAME
+
+const loveNotes = [
+
+"💙 I love your smile.",
+"💙 I love how you care for me.",
+"💙 I love your patience.",
+"💙 I love your hugs.",
+"💙 I love your voice.",
+"💙 I love your laugh.",
+"💙 I love your effort.",
+"💙 I love our memories.",
+"💙 I love your kindness.",
+"💙 I love everything about you."
+
+];
+
+const notesContainer =
+document.getElementById("notesContainer");
+
+let notesOpened = 0;
+
+loveNotes.forEach(note => {
+
+const card = document.createElement("div");
+
+card.className = "reason";
+
+card.innerHTML = "💌";
+
+card.onclick = function(){
+
+if(this.classList.contains("open")) return;
+
+this.classList.add("open");
+
+this.innerHTML = note;
+
+notesOpened++;
+
+document.getElementById("notesProgress").innerText =
+`${notesOpened} / ${loveNotes.length} notes found`;
+
+if(notesOpened === loveNotes.length){
+
+setTimeout(()=>{
+
+alert(
+"You found every hidden note. 💙\n\nNow let's relive some memories together."
+);
+
+document.getElementById("loveNotes")
+.classList.add("hidden");
+
+document.getElementById("gallery")
+.classList.remove("hidden");
+
+},1000);
+
+}
+
+};
+
+notesContainer.appendChild(card);
+
+});
+
+// TIMELINE PUZZLE
+
+const timelineEvents = [
+
+"First Kiss 💋",
+"Became Official 💙",
+"First Talk 🗨️",
+"28 Months Later 🥰",
+"Banana Balls Era 🍌"
+
+];
+
+const correctTimeline = [
+
+"First Talk 🗨️",
+"Banana Balls Era 🍌",
+"Became Official 💙",
+"First Kiss 💋",
+"28 Months Later 🥰"
+
+];
+
+let selectedTimeline = [];
+
+function startTimeline(){
+
+const container =
+document.getElementById("timelineContainer");
+
+container.innerHTML = "";
+
+selectedTimeline = [];
+
+const shuffled =
+[...timelineEvents].sort(() => Math.random() - 0.5);
+
+shuffled.forEach(event => {
+
+const btn = document.createElement("button");
+
+btn.innerText = event;
+
+btn.style.display = "block";
+btn.style.margin = "10px auto";
+
+btn.onclick = function(){
+
+selectedTimeline.push(event);
+
+btn.disabled = true;
+btn.style.opacity = "0.5";
+
+updateTimelineDisplay();
+
+};
+
+container.appendChild(btn);
+
+});
+
+}
+
+function updateTimelineDisplay(){
+
+const container =
+document.getElementById("timelineContainer");
+
+let display =
+document.getElementById("timelineProgress");
+
+if(!display){
+
+display = document.createElement("div");
+
+display.id = "timelineProgress";
+
+display.style.marginTop = "20px";
+
+container.appendChild(display);
+
+}
+
+display.innerHTML =
+"<strong>Your Timeline:</strong><br><br>" +
+selectedTimeline.join("<br>⬇️<br>");
+
+if(selectedTimeline.length === timelineEvents.length){
+
+document.getElementById("checkTimelineBtn")
+.style.display = "inline-block";
+
+}
+
+}
+
+function checkTimeline(){
+
+const correct =
+JSON.stringify(selectedTimeline) ===
+JSON.stringify(correctTimeline);
+
+if(correct){
+
+alert(
+"Perfect! 💙\n\nYou remembered our story beautifully."
+);
+
+document.getElementById("timelineSection").classList.add("hidden");
+document.getElementById("catchHeartSection").classList.remove("hidden");
+
+startHeartGame();
+
+}else{
+
+alert(
+"Almost, Love! 💙\n\nTry arranging our story again."
+);
+
+document.getElementById("checkTimelineBtn")
+.style.display = "none";
+
+startTimeline();
+
+}
+
+}
+
+// CATCH MY HEART GAME
+
+let heartScore = 0;
+let heartInterval;
+
+function startHeartGame(){
+
+heartScore = 0;
+
+document.getElementById("heartScore").innerText =
+"0 / 15 Hearts";
+
+const gameArea =
+document.getElementById("heartGameArea");
+
+gameArea.innerHTML = "";
+
+heartInterval = setInterval(createHeart,800);
+
+}
+
+function createHeart(){
+
+const gameArea =
+document.getElementById("heartGameArea");
+
+const heart =
+document.createElement("div");
+
+heart.innerHTML = "💙";
+
+heart.style.position = "absolute";
+heart.style.fontSize = "40px";
+heart.style.cursor = "pointer";
+
+heart.style.left =
+Math.random() * (gameArea.clientWidth - 50) + "px";
+
+heart.style.top = "-50px";
+
+gameArea.appendChild(heart);
+
+let pos = -50;
+
+const fall = setInterval(()=>{
+
+pos += 4;
+
+heart.style.top = pos + "px";
+
+if(pos > gameArea.clientHeight){
+
+clearInterval(fall);
+
+heart.remove();
+
+}
+
+},20);
+
+heart.onclick = function(){
+
+clearInterval(fall);
+
+heart.remove();
+
+heartScore++;
+
+document.getElementById("heartScore").innerText =
+`${heartScore} / 15 Hearts`;
+
+if(heartScore >= 15){
+
+clearInterval(heartInterval);
+
+setTimeout(()=>{
+
+alert(
+"💙 You caught all my hearts!\n\nJust like this game, you caught my heart long ago."
+);
+
+document.getElementById("catchHeartSection")
+.classList.add("hidden");
+
+document.getElementById("gallery")
+.classList.remove("hidden");
+
+},500);
+
+}
+
+};
 
 }
 
@@ -660,6 +1114,24 @@ window.scrollTo({
 top:document.body.scrollHeight,
 behavior:'smooth'
 });
+
+}
+
+let noScale = 1;
+
+function moveNoButton(){
+
+const btn = document.getElementById("noBtn");
+
+const x = Math.random() * 300 - 150;
+const y = Math.random() * 200 - 100;
+
+btn.style.transform =
+`translate(${x}px, ${y}px) scale(${noScale})`;
+
+if(noScale > 0.4){
+    noScale -= 0.08;
+}
 
 }
 
